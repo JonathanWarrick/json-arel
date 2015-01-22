@@ -1,14 +1,4 @@
 {
-  "with": {
-    "name": "lending_club_loans",
-    "select": {
-      "fields": "*",
-      "from": "prosper_loans",
-      "where": {
-        "loan_id": 123
-      }
-    }
-  },
   "fields": "*",
   "from": "lending_club_loans",
   "where": {

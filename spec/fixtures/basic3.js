@@ -6,5 +6,6 @@
   "where": {
     "loan_amount$gteq": 123
   },
-  "limit": 100
+  "limit": 100,
+  "offset": 200
 }

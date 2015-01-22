@@ -16,13 +16,18 @@ class Resolver
   end
 
   def resolve
-    # table = Arel::Table.new(@tree['from'], ActiveRecord::Base)
     resolve_node(@tree).to_sql
   end
 
   def resolve_node(node)
+
     # (with) SELECT (fields) FROM (from) (join) WHERE (CONDITIONS) (GROUPBY) (LIMIT)
     table = Arel::Table.new(node['from'])
+
+    # Does it contain a CTE?
+    ctes = (node['with'] || []).map do |cte|
+      Arel::Nodes::As.new(Arel::Table.new(cte['as'].to_sym), resolve_node(cte['select']))
+    end
 
     # Resolve the SELECT fields
     if node['fields'].class == String
@@ -43,8 +48,22 @@ class Resolver
       table[field.to_sym].send(comparator, val)
     end
 
-    # Resolve FROM / JOIN
-    expr = table.where(node['where']).project(node['fields'])
+    # Evaluate.
+    table = table.where(node['where']) if node['where'].length > 0
+    expr = table.project(node['fields'])
+
+    # TODO: support JOIN
+
+    # Resolve GROUP BY
+    node['group'] ||= []
+    if node['group'].class == String
+      node['group'] = [node['group']]
+    end
+    node['group'] = node['group'].map {|x| Arel.sql(x) }
+    expr = expr.group(node['group']) if node['group'].length > 0
+
+    # Evaluate CTEs
+    expr = expr.with(ctes) if ctes.length > 0
 
     # Resolve LIMIT / OFFSET
     expr.take(node['limit']) if node['limit']
