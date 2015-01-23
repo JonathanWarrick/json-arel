@@ -50,7 +50,11 @@ module JSONArel
       end
 
       # Evaluate.
-      table = table.where(node['where']) if node['where'].length > 0
+      if node['where'].length > 0
+        node['where'].each do |condition|
+          table = table.where(condition)
+        end
+      end
       expr = table.project(node['fields'])
 
       # TODO: support JOIN
