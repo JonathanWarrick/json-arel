@@ -1,13 +1,13 @@
 require "spec_helper"
-require_relative '../lib/resolver'
+require_relative '../lib/json_arel'
 require 'json'
 require 'pry'
 
-describe Resolver do
+describe JSONArel::Resolver do
 
   describe "#initialize" do    
 
-    subject { Resolver.new(data) }
+    subject { JSONArel::Resolver.new(data) }
 
     context "basic" do
       let(:data) { JSON.parse(File.open('spec/fixtures/basic.js').read) }
@@ -17,7 +17,7 @@ describe Resolver do
       end
 
       it "should raise exception with invalid expressions" do
-        expect { subject.parse_where('index$foo', 10) }.to raise_error(ResolverError)
+        expect { subject.parse_where('index$foo', 10) }.to raise_error(JSONArel::ResolverError)
       end
 
       it "should be able to resolve a simple query" do
