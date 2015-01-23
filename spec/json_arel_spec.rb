@@ -22,7 +22,7 @@ describe JSONArel::Resolver do
 
       it "should be able to resolve a simple query" do
         expect(subject.resolve).to eq(
-          "SELECT  * FROM \"lending_club_loans\" WHERE \"lending_club_loans\".\"loan_status\" IN (NULL), \"lending_club_loans\".\"loan_id\" = 1234, \"lending_club_loans\".\"loan_amount\" >= 123 LIMIT 100")
+          "SELECT  * FROM \"lending_club_loans\" WHERE \"lending_club_loans\".\"loan_status\" IN (NULL) AND \"lending_club_loans\".\"loan_id\" = 1234 AND \"lending_club_loans\".\"loan_amount\" >= 123 LIMIT 100")
       end
     end
 
