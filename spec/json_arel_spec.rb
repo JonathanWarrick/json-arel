@@ -119,5 +119,13 @@ describe JSONArel::Resolver do
       end
     end
 
+    context "readme" do
+      let(:data) { JSON.parse(File.open('spec/fixtures/readme.js').read) }
+
+      it "should match what's in the README" do
+        expect(subject.resolve).to eq("SELECT  id AS id, loan_type AS loan_type, fico ^ 2 AS inflated_fico_score FROM \"loans\" WHERE \"loans\".\"loan_amount\" >= 123 GROUP BY loan_type  ORDER BY id ASC LIMIT 100 OFFSET 200")
+      end
+    end
+
   end
 end
