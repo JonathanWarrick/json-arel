@@ -69,6 +69,26 @@ module JSONArel
       node['group'] = node['group'].map {|x| Arel.sql(x) }
       expr = expr.group(node['group']) if node['group'].length > 0
 
+      # Resolve ORDER BY 
+      node['order'] ||= []
+      if node['order'].class == String
+        node['order'] = [node['order']]
+      end
+      if node['order'].length > 0
+        node['order'].each do |condition|
+          if condition.kind_of?(Array)
+            condition[0] = Arel.sql(condition[0])
+            if condition[1] == "ASC"
+              expr = expr.order condition[0].asc
+            else
+              expr = expr.order condition[0].desc
+            end
+          else
+            expr = expr.order(condition)
+          end
+        end
+      end
+
       # Evaluate CTEs
       expr = expr.with(ctes) if ctes.length > 0
 
