@@ -79,7 +79,7 @@ resolver.resolve
 <td>`$gt`</td>
 <td>Greater Than</td>
 <td>`{"fico$gt": 700}</td>
-<td>FICO > 700</td>
+<td>FICO &gt 700</td>
 </tr>
 
 <tr>
@@ -87,6 +87,20 @@ resolver.resolve
 <td>Greater Than Or Equal To</td>
 <td>`{"fico$gteq": 700}</td>
 <td>FICO ≥ 700</td>
+</tr>
+
+<tr>
+<td>`$lt`</td>
+<td>Less Than</td>
+<td>`{"fico$lt": 700}</td>
+<td>FICO &lt 700</td>
+</tr>
+
+<tr>
+<td>`$lteq`</td>
+<td>Less Than Or Equal To</td>
+<td>`{"fico$lteq": 700}</td>
+<td>FICO ≤ 700</td>
 </tr>
 
 </tbody>
