@@ -14,12 +14,16 @@ Convert
 ```javascript
 {
   "fields": {
+    "id": "id",
+    "loan_type": "loan_type",
     "inflated_fico_score": "fico ^ 2"
   },
   "from": "loans",
   "where": {
     "loan_amount$gteq": 123
   },
+  "group": "loan_type",
+  "order": [["id", "ASC"]],
   "limit": 100,
   "offset": 200
 }
@@ -28,7 +32,13 @@ Convert
 into
 
 ```sql
-SELECT fico ^ 2 as inflated_fico_score FROM loans WHERE loan_amount >= 123 LIMIT 100 OFFSET 200
+SELECT id, loan_type, fico ^ 2 AS inflated_fico_score 
+FROM loans 
+WHERE loan_amount >= 123 
+GROUP BY loan_type  
+ORDER BY id ASC 
+LIMIT 100 
+OFFSET 200
 ```
 
 ## Usage
@@ -76,7 +86,21 @@ resolver.resolve
 <td>`$gteq`</td>
 <td>≥</td>
 <td>`{"fico$gteq": 700}</td>
-<td>FICO = 700</td>
+<td>FICO >= 700</td>
+</tr>
+
+<tr>
+<td>`$lt`</td>
+<td>Equals</td>
+<td>`{"fico$lt": 700}</td>
+<td>FICO < 700</td>
+</tr>
+
+<tr>
+<td>`$lteq`</td>
+<td>≥</td>
+<td>`{"fico$lteq": 700}</td>
+<td>FICO <= 700</td>
 </tr>
 
 </tbody>
