@@ -93,7 +93,7 @@ resolver.resolve
 <td>`$lt`</td>
 <td>Less Than</td>
 <td>`{"fico$lt": 700}</td>
-<td>FICO '&lt' 700</td>
+<td>FICO &lts 700</td>
 </tr>
 
 <tr>
