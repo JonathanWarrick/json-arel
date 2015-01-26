@@ -74,6 +74,46 @@ describe JSONArel::Resolver do
       end
     end
 
+    context "order1" do
+      let(:data) { JSON.parse(File.open('spec/fixtures/order1.js').read) }
+
+      it "should support basic order by" do
+        expect(subject.resolve).to eq("SELECT * FROM \"table1\" GROUP BY field1, field2  ORDER BY field2")
+      end
+    end
+
+    context "order2" do
+      let(:data) { JSON.parse(File.open('spec/fixtures/order2.js').read) }
+
+      it "should support basic order by with multiple conditions" do
+        expect(subject.resolve).to eq("SELECT * FROM \"table1\" GROUP BY field1, field2  ORDER BY field2, field1")
+      end
+    end
+
+    context "order3" do
+      let(:data) { JSON.parse(File.open('spec/fixtures/order3.js').read) }
+
+      it "should support order by in descending order" do
+        expect(subject.resolve).to eq("SELECT * FROM \"table1\" GROUP BY field1, field2  ORDER BY field2 DESC")
+      end
+    end
+
+    context "order4" do
+      let(:data) { JSON.parse(File.open('spec/fixtures/order4.js').read) }
+
+      it "should support order by in ascending order" do
+        expect(subject.resolve).to eq("SELECT * FROM \"table1\" GROUP BY field1, field2  ORDER BY field2 ASC")
+      end
+    end
+
+    context "order5" do
+      let(:data) { JSON.parse(File.open('spec/fixtures/order5.js').read) }
+
+      it "should default to descending order when an invalid sorter is passed in" do
+        expect(subject.resolve).to eq("SELECT * FROM \"table1\" GROUP BY field1, field2  ORDER BY field2 DESC")
+      end
+    end
+
     context "join1" do
       it "should support basic joins" do
       end
