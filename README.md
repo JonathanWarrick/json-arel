@@ -1,6 +1,11 @@
-# ruby-json-sql
+# json-arel
 
-Represent SQL queries in JSON.
+Represent SQL expressions as JSON objects. Relies on the outstanding
+[rails/json-arel](https://github.com/rails/arel) library to do most of the
+heavy lifting. 
+
+Also, the default is to encode the queries in the Postgres SQL dialect, but the
+library should support almost any dialect supported by Rails.
 
 ## Example
 
@@ -9,7 +14,7 @@ Convert
 ```javascript
 {
   "fields": {
-    "fico ^ 2": "inflated_fico_score"
+    "inflated_fico_score": "fico ^ 2"
   },
   "from": "loans",
   "where": {

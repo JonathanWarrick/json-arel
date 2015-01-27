@@ -1,19 +1,21 @@
 require 'arel'
-
 require 'active_record'
-
-ActiveRecord::Base.establish_connection(
-  :adapter => 'postgresql',
-  :database => 'explorer_development'
-)
 
 module JSONArel
   class Resolver
 
     VALID_OPERATORS = %w[$eq $not_eq $gt $gteq $lt $lteq $in]
 
-    def initialize(tree)
+    def default_active_record_opts
+      {
+        :adapter => 'postgresql',
+        :database => 'explorer_development'
+      }
+    end
+
+    def initialize(tree, active_record_opts=default_active_record_opts)
       @tree = tree
+      ActiveRecord::Base.establish_connection(active_record_opts)
     end
 
     def resolve
@@ -38,7 +40,7 @@ module JSONArel
         node['fields'] = node['fields'].map {|x| Arel.sql(x) }
       elsif node['fields'].class == Hash
         # Is it a hash?
-        node['fields'] = node['fields'].map do |k,v|
+        node['fields'] = node['fields'].invert.map do |k,v|
           Arel.sql(k).as(v)
         end
       end
