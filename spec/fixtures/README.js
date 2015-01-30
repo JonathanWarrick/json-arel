@@ -2,7 +2,7 @@
   "fields": {
     "id": "id",
     "loan_type": "loan_type",
-    "fico ^ 2": "inflated_fico_score"
+    "inflated_fico_score": "fico ^ 2"
   },
   "from": "loans",
   "where": {
