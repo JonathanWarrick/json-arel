@@ -89,19 +89,5 @@ resolver.resolve
 <td>FICO ≥ 700</td>
 </tr>
 
-<tr>
-<td>`$lt`</td>
-<td>Less Than</td>
-<td>`{"fico$lt": 700}</td>
-<td>FICO &lt 700</td>
-</tr>
-
-<tr>
-<td>`$lteq`</td>
-<td>Less Than Or Equal To</td>
-<td>`{"fico$lteq": 700}</td>
-<td>FICO ≤ 700</td>
-</tr>
-
 </tbody>
 </table>
